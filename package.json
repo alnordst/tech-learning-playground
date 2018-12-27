@@ -1,0 +1,40 @@
+{
+  "name": "tech-learning-playground",
+  "version": "1.0.0",
+  "description": "tech-learning-playground",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alnordst/tech-learning-playground.git"
+  },
+  "author": "a.l.nordstrom@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alnordst/tech-learning-playground/issues"
+  },
+  "homepage": "https://github.com/alnordst/tech-learning-playground#readme",
+  "devDependencies": {
+    "css-loader": "^2.0.2",
+    "pug": "^2.0.3",
+    "pug-loader": "^2.4.0",
+    "pug-plain-loader": "^1.0.0",
+    "style-loader": "^0.23.1",
+    "vue-loader": "^15.4.2",
+    "vue-template-compiler": "^2.5.21",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^4.2.1",
+    "hapi": "^17.8.1",
+    "inert": "^5.1.2",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.6",
+    "vue": "^2.5.21"
+  }
+}

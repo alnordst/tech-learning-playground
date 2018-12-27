@@ -1,0 +1,1 @@
+{"data":{"authentication":{"consumerKey":"test","consumerSecret":"1","accessToken":"two","accessTokenSecret":"333"},"seekAndRetweet":{"frequency":"*/5 * * * *","queries":[{"term":"#ssbu_tech OR #ssbu_kirby OR #ssbu_yoshi OR #ssbu_palu"}]}}}
