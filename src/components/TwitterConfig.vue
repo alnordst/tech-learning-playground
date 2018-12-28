@@ -16,7 +16,7 @@ export default {
   beforeCreate: function () {
     axios.get('/raw')
     .then(response => {
-      this.configs = response.data.data
+      this.configs = response.data
       this.status = 'ready'
     })
   },
@@ -39,7 +39,7 @@ export default {
     resetAll: function() {
       axios.get('/raw')
       .then(response => {
-        this.configs = response.data.data
+        this.configs = response.data
       })
     }
   }

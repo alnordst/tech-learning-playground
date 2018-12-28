@@ -41,7 +41,7 @@ const init = async function() {
       path: '/config',
       handler: (request, h) => {
         let path = Path.join(__dirname, 'twitter-config.json')
-        let payload = JSON.stringify(request.payload)
+        let payload = JSON.stringify(request.payload.data, null, 2)
         return fsPromises.writeFile(path, payload)
         .then(()=>{
           return h.response('success')

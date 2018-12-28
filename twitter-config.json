@@ -1,1 +1,16 @@
-{"data":{"authentication":{"consumerKey":"test","consumerSecret":"1","accessToken":"two","accessTokenSecret":"333"},"seekAndRetweet":{"frequency":"*/5 * * * *","queries":[{"term":"#ssbu_tech OR #ssbu_kirby OR #ssbu_yoshi OR #ssbu_palu"}]}}}
+{
+  "authentication": {
+    "consumerKey": "S8MEYNwGoNK0S3qUkEAT47Ysh",
+    "consumerSecret": "jayR1K4dmYGrR4JOfVc5xFqrjdoHziDUycsMnICX1xXWq1ULKW",
+    "accessToken": "1014332387998789633-CrS5hDtfoIQtgAvGyfaHm4UwLGsPyJ",
+    "accessTokenSecret": "MbfRDKyzOrpiFQt9BXJZh5eNwWIqhEfrYG3VvgGorFiaV"
+  },
+  "seekAndRetweet": {
+    "frequency": "*/1 * * * *",
+    "queries": [
+      {
+        "term": "#ssbu_tech OR #ssbu_kirby OR #ssbu_yoshi OR #ssbu_palu"
+      }
+    ]
+  }
+}
