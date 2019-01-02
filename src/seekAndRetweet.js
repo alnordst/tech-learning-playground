@@ -2,7 +2,6 @@
 
 const cron = require('cron')
 const fsPromises = require('fs').promises
-const Long = require('long')
 const path = require('path')
 const sequential = require('promise-sequential')
 const Twitter = require('twitter')
@@ -26,8 +25,7 @@ let run = function() {
       .then(buildQuery)
       .then(seek)
       .then(retweet)
-      .then(logLast)
-      .then(updateFrequency)
+      .then(aftermath)
       .catch(err => console.log(err))
 }
 
@@ -57,14 +55,12 @@ let buildQuery = function(configs) {
   for(var query of configs.queries) {
     terms.push(query.term)
   }
-  let fullQuery = {
-    q: terms.join(' OR '),
-    result_type: 'recent'
-  }
-  if(configs.lastReadId)
-    fullQuery.since_id = configs.lastReadId
 
-  return fullQuery
+  return {
+    q: terms.join(' OR '),
+    result_type: 'recent',
+    count: 100
+  }
 }
 
 /* Search Twitter. */
@@ -74,34 +70,30 @@ let seek = function(query) {
 
 /* Retweet given tweets. */
 let retweet = function(response) {
+  let retweetCount = 0
   return sequential(response.statuses.map(tweet => {
     return () => { 
-      console.log(tweet.id_str)
-      return client.post('statuses/retweet/' + tweet.id_str, {})
-        .catch(err => { console.log(err, tweet.id_str) })
+      return client.get('statuses/show/' + tweet.id_str, {})
+        .then(status => {
+          if(status.retweeted)
+            return Promise.resolve()
+          else
+            return client.post('statuses/retweet/' + status.id_str, {})
+              .then(() => { retweetCount++ })
+              .catch(err => { console.log(err, tweet.id_str, tweet.retweeted) })
+        })
     }
   })).then(() => {
-    return response.statuses
+    return retweetCount
   })
 }
 
-/* Log last retweeted tweet id in config file. */
-let logLast = function(tweets) {
-  let lastLogged = fullConfigs.seekAndRetweet.lastReadId
-  let lastTweet = tweets.reduce((acc, tweet) => {
-    let idLong = Long.fromString(tweet.id_str)
-    return idLong.gt(acc) ? idLong : acc
-  }, lastLogged ? Long.fromString(lastLogged) : Long.UZERO).toString()
-
-  fullConfigs.seekAndRetweet.lastReadId = lastTweet
-
-  return fsPromises.writeFile(configPath, JSON.stringify(fullConfigs, null, 2))
-}
-
 /* Update frequency of cron job based on configs. */
-let updateFrequency = function() {
+let aftermath = function(retweetCount) {
   job.setTime(new cron.CronTime(fullConfigs.seekAndRetweet.frequency))
   job.start()
+
+  console.log('Completed cycle at:', (new Date()).toLocaleString(), ' - Retweeted', retweetCount, 'item(s)')
 }
 
 init()

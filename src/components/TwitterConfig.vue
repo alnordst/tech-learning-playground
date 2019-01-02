@@ -4,7 +4,8 @@ div.d-flex.flex-column(v-if='status == "ready"')
   seek-and-retweet(v-model='configs.seekAndRetweet')
   .btn-group
     button.btn.btn-success(@click='saveAll') Save All
-    button.btn.btn-danger(@click='resetAll') Reset All
+    button.btn.btn-warning(@click='resetAll') Reset All
+    button.btn.btn-danger(@click='deleteAll') Delete Configs
 </template>
 
 <script>
@@ -17,6 +18,12 @@ export default {
     axios.get('/raw')
     .then(response => {
       this.configs = response.data
+      for(let obj of ["authentication", "seekAndRetweet"])
+        if(!(obj in this.configs)) this.configs[obj] = {}
+      this.status = 'ready'
+    })
+    .catch(err => {
+      this.configs = { authentication: {}, seekAndRetweet: {} }
       this.status = 'ready'
     })
   },
@@ -41,6 +48,11 @@ export default {
       .then(response => {
         this.configs = response.data
       })
+    },
+    deleteAll: function() {
+      axios.post('/config', {
+        data: {}
+      }).then(() => { location.reload() })
     }
   }
 }

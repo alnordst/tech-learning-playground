@@ -4,10 +4,8 @@ const Hapi = require('hapi')
 const Path = require('path')
 const fsPromises = require('fs').promises
 
-const server = Hapi.server({
-  host: 'localhost',
-  port: 8000
-})
+const port = process.env.PORT || 8000
+const server = Hapi.server({port: port})
 
 const init = async function() {
   await server.register(require('inert'));

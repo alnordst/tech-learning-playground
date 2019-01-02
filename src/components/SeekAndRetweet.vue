@@ -15,6 +15,14 @@ import FormCheck from './FormCheck.vue'
 import SarQuery from './SarQuery.vue'
 
 export default {
+  created: function() {
+    for(let field of ["frequency"])
+      if(!(field in this.sar))
+        this.$parent.configs.seekAndRetweet[field] = ""
+    for(let arr of ["queries"])
+      if(!(arr in this.sar))
+        this.$parent.configs.seekAndRetweet[arr] = []
+  },
   components: {
     FormField,
     FormCheck,
@@ -40,7 +48,7 @@ export default {
         }
       })
 
-if (indexToRemove != null)
+      if (indexToRemove != null)
         this.$parent.configs.seekAndRetweet.queries.splice(indexToRemove, 1)
     }
   }

@@ -13,6 +13,11 @@ import FormField from './FormField.vue'
 import FormCheck from './FormCheck.vue'
 
 export default {
+  created: function() {
+    for(let field of ["consumerKey", "consumerSecret", "accessToken", "accessTokenSecret"])
+      if(!(field in this.auth)) 
+        this.$parent.configs.authentication[field] = ""
+  },
   components: {
     FormField,
     FormCheck

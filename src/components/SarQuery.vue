@@ -10,6 +10,10 @@ import FormField from './FormField.vue'
 import FormCheck from './FormCheck.vue'
 
 export default {
+  created: function() {
+    if(!("term" in this.query))
+      this.$emit("remove-query", query)
+  },
   components: {
     FormField,
     FormCheck
