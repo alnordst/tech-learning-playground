@@ -32,3 +32,5 @@ node_modules
 
 # Webpack
 dist/bundle.js
+
+twitter-config.json
