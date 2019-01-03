@@ -1,4 +1,4 @@
-FROM arm32v7/node:lts
+FROM node:lts
 
 WORKDIR /usr/src/app
 
